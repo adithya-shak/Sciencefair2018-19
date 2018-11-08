@@ -15,7 +15,9 @@ while(cap.isOpened()):
 
     # Display the resulting frame
     cv2.imshow('Frame',frame)
-
+    frame = cvtColor(frame, COLOR_RGB2GRAY)
+    cv2.imshow('Gray1', frame)
+    cv2.show()
     # Press Q on keyboard to  exit
     if cv2.waitKey(25) & 0xFF == ord('q'):
       break
