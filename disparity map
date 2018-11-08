@@ -10,7 +10,7 @@ disparity = stereo.compute(imgL,imgR)
 plt.imshow(disparity,'gray')
 plt.show()
 
-if (cap.isOpened()== False):
+if (imgL.isOpened()== False or imgR.isOpened()== False):
   print("Error opening video stream or file")
 
 # Read until video is completed
