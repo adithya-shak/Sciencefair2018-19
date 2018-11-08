@@ -5,8 +5,7 @@ from matplotlib import pyplot as plt
 imgL = cv2.imread(1)
 imgR = cv2.imread(2)
 
-stereo = cv2.createStereoBM(numDisparities=16, blockSize=15)
-disparity = stereo.compute(imgL,imgR)
+
 
 
 if (imgL.isOpened()== False or imgR.isOpened()== False):
@@ -15,6 +14,8 @@ if (imgL.isOpened()== False or imgR.isOpened()== False):
 # Read until video is completed
 while(cap.isOpened()):
   # Capture frame-by-frame
+  stereo = cv2.createStereoBM(numDisparities=16, blockSize=15)
+  disparity = stereo.compute(imgL,imgR)
   ret, frame = cap.read()
   if ret == True:
 
