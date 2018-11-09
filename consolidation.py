@@ -2,6 +2,7 @@ from __future__ import print_function
 import os
 import numpy as np
 import cv2 as cv
+import time
 
 ply_header = '''ply
 format ascii 1.0
@@ -22,19 +23,68 @@ cap.set(4,480) # set Height
 cap2.set(3,640) # set Width
 cap2.set(4,480) # set Height
 
-while(True):
-    # Capture frame-by-frame
-    ret, frame = cap.read()
-    ret, frame2 = cap2.read()
-    # Our operations on the frame come here
-    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    gray2 = cv.cvtColor(frame2, cv.COLOR_BGR2GRAY)
-    # Display the resulting frame
-    cv.imshow('right',gray)
-    cv.imshow('left',gray2)
-    if cv.waitKey(1) & 0xFF == ord('q'):
-        break
+def write_ply(fn, verts, colors):
+    verts = verts.reshape(-1, 3)
+    colors = colors.reshape(-1, 3)
+    verts = np.hstack([verts, colors])
+    with open(fn, 'wb') as f:
+        f.write((ply_header % dict(vert_num=len(verts))).encode('utf-8'))
+        np.savetxt(f, verts, fmt='%f %f %f %d %d %d ')
 
+while(True):
+    if __name__ == '__main__':
+        print('loading images...')
+        bool1, image1 = cap.read()
+        bool2, image2 = cap2.read()
+        cv.imwrite('opencvL'+'.jpg', image1)
+        cv.imwrite('opencvR'+'.jpg', image2)
+        imgL = cv.imread('opencvL.jpg')  # downscale images for faster processing
+        imgR = cv.imread('opencvR.jpg')
+
+        # disparity range is tuned for 'aloe' image pair
+        window_size = 3
+        min_disp = 16
+        num_disp = 112-min_disp
+        stereo = cv.StereoSGBM_create(minDisparity = min_disp,
+            numDisparities = num_disp,
+            blockSize = 16,
+            P1 = 8*3*window_size**2,
+            P2 = 32*3*window_size**2,
+            disp12MaxDiff = 1,
+            uniquenessRatio = 10,
+            speckleWindowSize = 100,
+            speckleRange = 32
+        )
+
+        print('computing disparity...')
+        disp = stereo.compute(imgL, imgR).astype(np.float32) / 16.0
+
+        print('generating 3d point cloud...',)
+        h, w = imgL.shape[:2]
+        f = 0.8*w                          # guess for focal length
+        Q = np.float32([[1, 0, 0, -0.5*w],
+                        [0,-1, 0,  0.5*h], # turn points 180 deg around x-axis,
+                        [0, 0, 0,     -f], # so that y-axis looks up
+                        [0, 0, 1,      0]])
+        points = cv.reprojectImageTo3D(disp, Q)
+        colors = cv.cvtColor(imgL, cv.COLOR_BGR2RGB)
+        mask = disp > disp.min()
+        out_points = points[mask]
+        out_colors = colors[mask]
+        out_fn = 'out.ply'
+        write_ply('out.ply', out_points, out_colors)
+        print('%s saved' % 'out.ply')
+        cv.imshow('left', imgL)
+        cv.imshow('disparity', (disp-min_disp)/num_disp)
+        os.remove("opencvL.jpg")
+        os.remove("out.ply")
+        os.remove("opencvR.jpg")
+
+        if cv.waitKey(1) & 0xFF == ord('q'):
+            break
+        time.sleep(1)
+    else:
+        break
 # When everything done, release the capture
 cap.release()
 cv.destroyAllWindows()
