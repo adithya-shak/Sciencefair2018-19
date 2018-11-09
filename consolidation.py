@@ -27,11 +27,11 @@ while(True):
     ret, frame = cap.read()
     ret, frame2 = cap2.read()
     # Our operations on the frame come here
-    #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    #gray2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
+    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    gray2 = cv.cvtColor(frame2, cv.COLOR_BGR2GRAY)
     # Display the resulting frame
-    cv.imshow('right',frame)
-    cv.imshow('left',frame2)
+    cv.imshow('right',gray)
+    cv.imshow('left',gray2)
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
 
