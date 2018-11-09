@@ -23,7 +23,7 @@ property uchar green
 property uchar blue
 end_header
 '''
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(2)
 cap2 = cv.VideoCapture(2)
 cap.set(3,640) # set Width
 cap.set(4,480) # set Height

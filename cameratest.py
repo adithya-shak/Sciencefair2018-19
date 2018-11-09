@@ -4,25 +4,6 @@ import sys
 from matplotlib import pyplot as plt
 import time
 
-ply_header = '''ply
-format ascii 1.0
-element vertex %(vert_num)d
-property float x
-property float y
-property float z
-property uchar red
-property uchar green
-property uchar blue
-end_header
-'''
-
-def write_ply(fn, verts, colors):
-    verts = verts.reshape(-1, 3)
-    colors = colors.reshape(-1, 3)
-    verts = np.hstack([verts, colors])
-    with open(fn, 'wb') as f:
-        f.write((ply_header % dict(vert_num=len(verts))).encode('utf-8'))
-        np.savetxt(f, verts, fmt='%f %f %f %d %d %d ')
 
 cap = cv2.VideoCapture(0)
 cap2 = cv2.VideoCapture(2)
@@ -48,10 +29,10 @@ while(cap.isOpened() and cap2.isOpened()):
     # Display the resulting frame
         cv2.imshow('Frame',frame)
         cv2.imshow('Frame2',frame2)
-        framegray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        frame2gray = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
-        cv2.imshow('Gray1', framegray)
-        cv2.imshow('Gray2', frame2gray)
+        #framegray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        #frame2gray = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
+        #cv2.imshow('Gray1', framegray)
+        #cv2.imshow('Gray2', frame2gray)
         #stereo = cv2.StereoBM_create(numDisparities=16, blockSize=15)
         #disparity = stereo.compute(framegray, frame2gray)
         #minVal, maxVal, randval, dontcare = cv2.minMaxLoc(disparity)
