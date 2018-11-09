@@ -68,8 +68,8 @@ if __name__ == '__main__':
     mask = disp > disp.min()
     out_points = points[mask]
     out_colors = colors[mask]
-    out_fn = 'out.ply'
-    write_ply('out.ply', out_points, out_colors)
+    #out_fn = 'out.ply'
+    #write_ply('out.ply', out_points, out_colors)
     print('%s saved' % 'out.ply')
 
     cv.imshow('left', imgL)
