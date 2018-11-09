@@ -37,10 +37,9 @@ if (cap.isOpened()== False and cap2.isOpened()== False):
 # Read until video is completed
 while(cap.isOpened() and cap2.isOpened()):
 
-    if __name__ == '__main__':
-        print('loading images...')
-        imgL = cv2.imread('left.jpg')  # downscale images for faster processing
-        imgR = cv2.imread('actuallyleft.jpg')
+    #if __name__ == '__main__':
+        #imgL = cv2.imread('left.jpg')  # downscale images for faster processing
+        #imgR = cv2.imread('actuallyleft.jpg')
   # Capture frame-by-frame
     ret, frame = cap.read()
     ret2, frame2 = cap2.read()
@@ -60,7 +59,7 @@ while(cap.isOpened() and cap2.isOpened()):
         #disparitywithcolor = cv2.applyColorMap(dispweird, cv2.COLORMAP_JET)
         #plt.imshow(disparity,'disparity')
         #plt.show()
-        delay(1000)
+        time.sleep(1)
     # Press Q on keyboard to  exit
     if cv2.waitKey(25) & 0xFF == ord('q'):
       break

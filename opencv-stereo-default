@@ -23,6 +23,12 @@ property uchar green
 property uchar blue
 end_header
 '''
+cap = cv2.VideoCapture(0)
+cap2 = cv2.VideoCapture(2)
+cap.set(3,640) # set Width
+cap.set(4,480) # set Height
+cap2.set(3,640) # set Width
+cap2.set(4,480) # set Height
 
 def write_ply(fn, verts, colors):
     verts = verts.reshape(-1, 3)
