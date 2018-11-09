@@ -23,8 +23,8 @@ property uchar green
 property uchar blue
 end_header
 '''
-cap = cv2.VideoCapture(0)
-cap2 = cv2.VideoCapture(2)
+cap = cv.VideoCapture(0)
+cap2 = cv.VideoCapture(2)
 cap.set(3,640) # set Width
 cap.set(4,480) # set Height
 cap2.set(3,640) # set Width
@@ -41,8 +41,12 @@ def write_ply(fn, verts, colors):
 
 if __name__ == '__main__':
     print('loading images...')
-    imgL = cap.read()  # downscale images for faster processing
-    imgR = cap2.read()
+    bool1, image1 = cap.read()
+    bool2, image2 = cap2.read()
+    cv.imwrite('opencvL'+'.jpg', image1)
+    cv.imwrite('opencvR'+'.jpg', image2)
+    imgL = cv.imread('opencvL.jpg')  # downscale images for faster processing
+    imgR = cv.imread('opencvR.jpg')
 
     # disparity range is tuned for 'aloe' image pair
     window_size = 3
