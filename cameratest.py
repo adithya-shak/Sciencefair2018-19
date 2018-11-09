@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-
 cap = cv2.VideoCapture(0)
 
 # Check if camera opened successfully
@@ -15,9 +14,8 @@ while(cap.isOpened()):
 
     # Display the resulting frame
     cv2.imshow('Frame',frame)
-    frame = cvtColor(frame, COLOR_RGB2GRAY)
-    cv2.imshow('Gray1', frame)
-    cv2.show()
+    framegray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    cv2.imshow('Gray1', framegray)
     # Press Q on keyboard to  exit
     if cv2.waitKey(25) & 0xFF == ord('q'):
       break
