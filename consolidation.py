@@ -42,18 +42,20 @@ while(True):
         imgR = cv.imread('opencvR.jpg')
 
         # disparity range is tuned for 'aloe' image pair
-        window_size = 3
-        min_disp = 16
+        window_size = 7
+        min_disp = 0
+        max_disp = 160
         num_disp = 112-min_disp
         stereo = cv.StereoSGBM_create(minDisparity = min_disp,
             numDisparities = num_disp,
-            blockSize = 16,
+            blockSize = 5,
             P1 = 8*3*window_size**2,
             P2 = 32*3*window_size**2,
             disp12MaxDiff = 1,
-            uniquenessRatio = 10,
-            speckleWindowSize = 100,
-            speckleRange = 32
+            uniquenessRatio = 15,
+            speckleWindowSize = 50,
+            speckleRange = 2
+            preFilterCap=63
         )
 
         print('computing disparity...')
@@ -75,6 +77,7 @@ while(True):
         write_ply('out.ply', out_points, out_colors)
         print('%s saved' % 'out.ply')
         cv.imshow('left', imgL)
+        cv.imshow('right', imgR)
         cv.imshow('disparity', (disp-min_disp)/num_disp)
         os.remove("opencvL.jpg")
         os.remove("out.ply")
