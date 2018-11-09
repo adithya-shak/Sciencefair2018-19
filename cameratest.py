@@ -24,7 +24,7 @@ def write_ply(fn, verts, colors):
         f.write((ply_header % dict(vert_num=len(verts))).encode('utf-8'))
         np.savetxt(f, verts, fmt='%f %f %f %d %d %d ')
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 cap2 = cv2.VideoCapture(2)
 cap.set(3,640) # set Width
 cap.set(4,480) # set Height
