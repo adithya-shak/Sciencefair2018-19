@@ -5,6 +5,10 @@ from matplotlib import pyplot as plt
 
 cap = cv2.VideoCapture(0)
 cap2 = cv2.VideoCapture(2)
+cap.set(3,640) # set Width
+cap.set(4,480) # set Height
+cap2.set(3,640) # set Width
+cap2.set(4,480) # set Height
 # Check if camera opened successfully
 if (cap.isOpened()== False and cap2.isOpened()== False):
   print("Error opening video stream or file")
