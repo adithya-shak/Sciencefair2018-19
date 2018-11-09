@@ -8,7 +8,7 @@ Resulting .ply file cam be easily viewed using MeshLab ( http://meshlab.sourcefo
 
 # Python 2/3 compatibility
 from __future__ import print_function
-
+import os
 import numpy as np
 import cv2 as cv
 
@@ -81,8 +81,8 @@ if __name__ == '__main__':
     #out_fn = 'out.ply'
     #write_ply('out.ply', out_points, out_colors)
     print('%s saved' % 'out.ply')
-
     cv.imshow('left', imgL)
     cv.imshow('disparity', (disp-min_disp)/num_disp)
     cv.waitKey()
     cv.destroyAllWindows()
+    os.remove("my.png")
