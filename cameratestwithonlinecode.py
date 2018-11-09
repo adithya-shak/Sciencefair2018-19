@@ -3,6 +3,11 @@ import numpy as np
 import sys
 from matplotlib import pyplot as plt
 
+min_disp = 16
+if sys.argv[1] > 0:
+    min_disp = int(sys.argv[1])
+num_disp = 112 - min_disp
+window_size = 17
 cap = cv2.VideoCapture(0)
 cap2 = cv2.VideoCapture(2)
 # Check if camera opened successfully
@@ -25,12 +30,8 @@ while(cap.isOpened() and cap2.isOpened()):
     cv2.imshow('Gray2', frame2gray)
     stereo = cv2.StereoBM_create(numDisparities=16, blockSize=15)
     disparity = stereo.compute(framegray, frame2gray)
-    #minVal, maxVal, randval, dontcare = cv2.minMaxLoc(disparity)
-    #disparity.convertTo(dispweird, CV_8UC1, 255.0/(maxVal - minVal), -minVal * 255.0/(maxVal - minVal));
-    #disparitywithcolor = cv2.applyColorMap(dispweird, cv2.COLORMAP_JET)
     plt.imshow(disparity,'disparity')
     plt.show()
-    delay(1000)
     # Press Q on keyboard to  exit
     if cv2.waitKey(25) & 0xFF == ord('q'):
       break

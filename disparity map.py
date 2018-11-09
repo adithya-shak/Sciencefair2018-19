@@ -26,10 +26,10 @@ while(imgL.isOpened() and imgR.isOpened()):
     #cv2.show()
     #cv2.imshow(frame2,'gray2')
     #cv2.show()
-    #stereo = cv2.createStereoBM(numDisparities=16, blockSize=15)
-    #disparity = stereo.compute(frame,frame2)
-    #plt.imshow(disparity,'disparity')
-    #plt.show()
+    stereo = cv2.createStereoBM(numDisparities=16, blockSize=15)
+    disparity = stereo.compute(frame,frame2)
+    plt.imshow(disparity,'disparity')
+    plt.show()
 
     # Press Q on keyboard to  exit
     if cv2.waitKey(25) & 0xFF == ord('q'):
