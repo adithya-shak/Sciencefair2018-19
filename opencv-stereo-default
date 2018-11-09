@@ -84,6 +84,7 @@ if __name__ == '__main__':
     cv.imshow('left', imgL)
     cv.imshow('disparity', (disp-min_disp)/num_disp)
     os.remove("opencvL.jpg")
+    os.remove("out.ply")
     os.remove("opencvR.jpg")
     cv.waitKey()
     cv.destroyAllWindows()
