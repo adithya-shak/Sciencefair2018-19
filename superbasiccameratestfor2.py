@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-cap = cv2.VideoCapture(4)
+cap = cv2.VideoCapture(0)
 cap2 = cv2.VideoCapture(2)
 
 while(True):
