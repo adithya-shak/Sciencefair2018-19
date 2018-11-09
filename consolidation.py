@@ -55,7 +55,6 @@ while(True):
             uniquenessRatio = 15,
             speckleWindowSize = 50,
             speckleRange = 2
-            preFilterCap=63
         )
 
         print('computing disparity...')
@@ -73,19 +72,19 @@ while(True):
         mask = disp > disp.min()
         out_points = points[mask]
         out_colors = colors[mask]
-        out_fn = 'out.ply'
-        write_ply('out.ply', out_points, out_colors)
-        print('%s saved' % 'out.ply')
+        #out_fn = 'out.ply'
+        #write_ply('out.ply', out_points, out_colors)
+        #print('%s saved' % 'out.ply')
         cv.imshow('left', imgL)
         cv.imshow('right', imgR)
         cv.imshow('disparity', (disp-min_disp)/num_disp)
         os.remove("opencvL.jpg")
-        os.remove("out.ply")
+        #os.remove("out.ply")
         os.remove("opencvR.jpg")
 
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
-        time.sleep(1)
+        time.sleep(.1)
     else:
         break
 # When everything done, release the capture
