@@ -4,7 +4,7 @@ from video import create_capture
 
 # You probably need to adjust some of these:
 video_src = 0
-cascade_fn = "haarcascades/haarcascade_frontalface_default.xml"
+cascade_fn = "haarcascade_frontalface_default.xml"
 # Create a new CascadeClassifier from given cascade file:
 cascade = cv2.CascadeClassifier(cascade_fn)
 cam = create_capture(video_src)
